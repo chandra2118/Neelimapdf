@@ -1,0 +1,175 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>PDF Editor</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            max-width: 600px;
+            margin: 0 auto;
+            padding: 20px;
+            background-color: #f4f4f4;
+            line-height: 1.6;
+        }
+        h1 {
+            text-align: center;
+            color: #333;
+            border-bottom: 2px solid #5c5c5c;
+            padding-bottom: 10px;
+        }
+        form {
+            background-color: white;
+            padding: 30px;
+            border-radius: 8px;
+            box-shadow: 0 4px 6px rgba(0,0,0,0.1);
+        }
+        label {
+            display: block;
+            margin-bottom: 5px;
+            font-weight: bold;
+            color: #555;
+        }
+        input[type="text"], 
+        input[type="number"], 
+        select {
+            width: 100%;
+            padding: 10px;
+            margin-bottom: 15px;
+            border: 1px solid #ddd;
+            border-radius: 4px;
+            box-sizing: border-box;
+        }
+        button {
+            width: 100%;
+            padding: 12px;
+            background-color: #4CAF50;
+            color: white;
+            border: none;
+            border-radius: 4px;
+            cursor: pointer;
+            font-size: 16px;
+            transition: background-color 0.3s ease;
+        }
+        button:hover {
+            background-color: #45a049;
+        }
+        .input-group {
+            margin-bottom: 15px;
+        }
+        @media (max-width: 600px) {
+            body {
+                padding: 10px;
+            }
+            form {
+                padding: 15px;
+            }
+        }
+    </style>
+    <script>
+        // Function to format the date as dd-mm-yyyy and extract month and year details
+        function getCurrentDate() {
+            const date = new Date();
+            const day = String(date.getDate()).padStart(2, '0');
+            const monthIndex = date.getMonth(); // Get the month index (0-11)
+            const monthNames = [
+                "January", "February", "March", "April", "May", "June", 
+                "July", "August", "September", "October", "November", "December"
+            ];
+            const month1 = monthNames[monthIndex]; // Full month name
+            const month = String(date.getMonth() + 1).padStart(2, '0'); // Month in two-digit format
+            const year = date.getFullYear();
+            
+            // Return the formatted date and extracted month and year details
+            return {
+                fullDate: `${day}-${month}-${year}`,
+                Month: month1,
+                Year: year
+            };
+        }
+        
+        // Set the current date and hidden input values when the page loads
+        window.onload = function() {
+            const currentDate = getCurrentDate();
+            
+            // Set the full date in the input field
+            document.getElementById("date").value = currentDate.fullDate;
+            
+            // Set the hidden input fields for Year and Month
+            document.getElementById("Year").value = currentDate.Year;
+            document.getElementById("Month").value = currentDate.Month;
+        };
+    </script>
+</head>
+<body>
+    <h1>PDF Editor</h1>
+    <form action="/edit-pdf" method="POST">
+        <input type="hidden" name="date" id="date">
+        
+        <div class="input-group">
+            <label for="Cust_name">Customer Name:</label>
+            <input type="text" name="Cust_name" id="Cust_name" placeholder="Enter customer name" required>
+        </div>
+        
+        <div class="input-group">
+            <label for="Cust_Area">Area:</label>
+            <input type="text" name="Cust_Area" id="Cust_Area" placeholder="Enter area" required>
+        </div>
+        
+        <div class="input-group">
+            <label for="Cust_City">City:</label>
+            <input type="text" name="Cust_City" id="Cust_City" placeholder="Enter city" required>
+        </div>
+        
+        <div class="input-group">
+            <label for="Cust_pin">Pincode:</label>
+            <input type="text" name="Cust_pin" id="Cust_pin" placeholder="Enter pincode" required>
+        </div>
+        
+        <div class="input-group">
+            <label for="WGstInr">Price:</label>
+            <input type="text" name="WGstInr" id="WGstInr" placeholder="Enter price" required>
+        </div>
+        
+        <div class="input-group">
+            <label for="discount">Discount:</label>
+            <input type="text" name="discount" id="discount" placeholder="Enter discount value" required >
+            <select name="discountType" id="discountType" required>
+                <option value="perKg">Per Kg</option>
+                <option value="full">Full Discount</option>
+            </select>
+        </div>
+        
+        <div class="input-group">
+            <label for="weight">weight:</label>
+            <select name="weight" id="weight" required>
+                <option value="14.2 Kg">14.2 Kg</option>
+                <option value="5 Kg">5 kg</option>
+                <option value="10 Kg Composite">10Kg Composite</option>
+                <option value="5 Kg Composite">5Kg Composite</option>
+                <option value="19 Kg">19 Kg</option>
+                <option value="5 Kg FTL-New ">5 Kg FTL-New Connection</option>
+                <option value="5 Kg FTL-Refill">5 Kg FTL-Refill</option>
+                <option value="5 kg POS New ">5 kg POS New connection</option>
+                <option value="5 kg POS Refill">5 kg POS - Refill</option>
+                <option value="5 kg POS Comp New">5 kg POS Composite New Connection</option>
+                <option value="5 kg POS Comp Refill">5 kg POS Composite Refill</option>
+                <option value="2 kg POS New ">2 kg POS New connection</option>
+                <option value="2 kg POS Refill">2 kg POS Refill</option>
+                <option value="47.5 Kg">47.5 Kg</option>
+                <option value="19 Kg Nano Cut">19 Kg Nano Cut</option>
+                <option value="19 Kg XtraTeJ">19 Kg XtraTeJ</option>
+                <option value="47.5 Kg XtraTeJ">47.5 Kg XtraTeJ</option>
+                
+            </select>
+        </div>
+        
+        <!-- Hidden fields to store Year and Month -->
+        <input type="hidden" name="Year" id="Year">
+        <input type="hidden" name="Month" id="Month">
+        
+        <button type="submit">Edit and Download PDF</button>
+    </form>
+</body>
+</html>
