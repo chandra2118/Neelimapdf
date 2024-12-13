@@ -42,8 +42,8 @@ app.post('/edit-pdf', async (req, res) => {
     let DPregstpkg=0,DWGstpkg=0,DPreGstInr=0,DWGstInr=0,FPregstpkg=0,FWGstpkg=0,FPreGstInr=0,FWGstInr=0
    
     if (discountType === "perKg") {
-      DPregstpkg = (discount/1).toFixed(2);
-      DWGstpkg = (DPregstpkg*1.18).toFixed(2);
+      DWGstpkg = (discount/1).toFixed(2);
+      DPregstpkg = (DWGstpkg/1.18).toFixed(2);
       DPreGstInr = (DPregstpkg*weight_adj).toFixed(2);
       DWGstInr = (DWGstpkg*weight_adj).toFixed(2);
 
